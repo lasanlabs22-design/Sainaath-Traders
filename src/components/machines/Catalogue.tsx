@@ -11,17 +11,12 @@ const useCases: { value: UseCase; label: string }[] = [
   { value: "cafe", label: "Café & Hotel" },
 ];
 
-const budgets = [
-  { value: "u20", label: "Under ₹20,000", test: (p: number | null) => p !== null && p < 20000 },
-  { value: "20-60", label: "₹20,000 – ₹60,000", test: (p: number | null) => p !== null && p >= 20000 && p <= 60000 },
-  { value: "60-150", label: "₹60,000 – ₹1.5 lakh", test: (p: number | null) => p !== null && p > 60000 && p <= 150000 },
-  { value: "premium", label: "₹1.5 lakh+ / on request", test: (p: number | null) => p === null || p > 150000 },
-] as const;
+const drinks = ["Espresso", "Cappuccino", "Filter Coffee", "Masala", "Lemon Tea", "Hot Milk", "Soup"] as const;
 
 const sorts = [
   { value: "featured", label: "Recommended" },
-  { value: "price-asc", label: "Price: low to high" },
-  { value: "price-desc", label: "Price: high to low" },
+  { value: "brand", label: "Brand A–Z" },
+  { value: "menu", label: "Most drinks first" },
 ] as const;
 
 type Sort = (typeof sorts)[number]["value"];
@@ -29,7 +24,9 @@ type Sort = (typeof sorts)[number]["value"];
 export function Catalogue({ machines, categories, initialCategory }: { machines: Machine[]; categories: Category[]; initialCategory?: CategorySlug }) {
   const [category, setCategory] = useState<CategorySlug | "all">(initialCategory ?? "all");
   const [uses, setUses] = useState<UseCase[]>([]);
-  const [budget, setBudget] = useState<string | null>(null);
+  const [brand, setBrand] = useState<string | null>(null);
+  const [drink, setDrink] = useState<string | null>(null);
+  const brands = useMemo(() => Array.from(new Set(machines.map((m) => m.brand))), [machines]);
   const [sort, setSort] = useState<Sort>("featured");
   const [query, setQuery] = useState("");
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -48,25 +45,25 @@ export function Catalogue({ machines, categories, initialCategory }: { machines:
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const b = budgets.find((x) => x.value === budget);
     const list = machines.filter(
       (m) =>
         (category === "all" || m.category === category) &&
         (uses.length === 0 || uses.some((u) => m.idealFor.includes(u))) &&
-        (!b || b.test(m.price)) &&
-        (!q || `${m.brand} ${m.name} ${m.model} ${m.tagline}`.toLowerCase().includes(q)),
+        (!brand || m.brand === brand) &&
+        (!drink || (m.beverages ?? []).some((d) => d.toLowerCase().includes(drink.toLowerCase()))) &&
+        (!q || `${m.brand} ${m.line ?? ""} ${m.name} ${m.model} ${m.tagline} ${(m.beverages ?? []).join(" ")}`.toLowerCase().includes(q)),
     );
-    const price = (m: Machine) => m.price ?? Number.MAX_SAFE_INTEGER;
-    if (sort === "price-asc") list.sort((a, b) => price(a) - price(b));
-    if (sort === "price-desc") list.sort((a, b) => price(b) - price(a));
+    if (sort === "brand") list.sort((a, b) => a.brand.localeCompare(b.brand));
+    if (sort === "menu") list.sort((a, b) => (b.beverages?.length ?? 0) - (a.beverages?.length ?? 0));
     if (sort === "featured") list.sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
     return list;
-  }, [machines, category, uses, budget, sort, query]);
+  }, [machines, category, uses, brand, drink, sort, query]);
 
-  const activeCount = uses.length + (budget ? 1 : 0) + (sort !== "featured" ? 1 : 0);
+  const activeCount = uses.length + (brand ? 1 : 0) + (drink ? 1 : 0) + (sort !== "featured" ? 1 : 0);
   const reset = () => {
     setUses([]);
-    setBudget(null);
+    setBrand(null);
+    setDrink(null);
     setSort("featured");
     setQuery("");
     setCategory("all");
@@ -95,26 +92,39 @@ export function Catalogue({ machines, categories, initialCategory }: { machines:
       </fieldset>
 
       <fieldset>
-        <legend className="eyebrow mb-3">Budget</legend>
-        <div className="space-y-1">
-          {budgets.map((b) => (
-            <label key={b.value} className="flex min-h-10 cursor-pointer items-center gap-3 rounded-lg px-2 text-sm hover:bg-cream">
-              <input
-                type="radio"
-                name="budget"
-                checked={budget === b.value}
-                onChange={() => setBudget(b.value)}
-                className="size-4 accent-[var(--color-brass-deep)]"
-              />
-              {b.label}
-            </label>
-          ))}
-          {budget && (
-            <button type="button" onClick={() => setBudget(null)} className="px-2 pt-1 text-xs font-semibold text-brass-deep underline">
-              Clear budget
-            </button>
-          )}
+        <legend className="eyebrow mb-3">Must serve</legend>
+        <div className="flex flex-wrap gap-2">
+          {drinks.map((d) => {
+            const on = drink === d;
+            return (
+              <button
+                key={d}
+                type="button"
+                aria-pressed={on}
+                onClick={() => setDrink(on ? null : d)}
+                className={`min-h-10 rounded-full border px-4 text-sm transition-colors ${on ? "border-espresso bg-espresso text-ivory" : "border-line bg-ivory hover:border-brass"}`}
+              >
+                {d}
+              </button>
+            );
+          })}
         </div>
+      </fieldset>
+
+      <fieldset>
+        <legend className="eyebrow mb-3">Brand</legend>
+        <select
+          value={brand ?? ""}
+          onChange={(e) => setBrand(e.target.value || null)}
+          className="min-h-11 w-full rounded-xl border border-line bg-ivory px-3 text-sm focus:border-brass"
+        >
+          <option value="">All brands</option>
+          {brands.map((b) => (
+            <option key={b} value={b}>
+              {b}
+            </option>
+          ))}
+        </select>
       </fieldset>
 
       <fieldset>
@@ -175,7 +185,7 @@ export function Catalogue({ machines, categories, initialCategory }: { machines:
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search by brand or model…"
+                placeholder="Search brand, model or drink…"
                 className="min-h-12 w-full rounded-full border border-line bg-ivory pl-11 pr-4 text-sm placeholder:text-muted/70 focus:border-brass focus:outline-none"
               />
             </label>
@@ -202,7 +212,7 @@ export function Catalogue({ machines, categories, initialCategory }: { machines:
           ) : (
             <div className="mt-6 rounded-3xl border border-dashed border-line bg-cream px-6 py-16 text-center">
               <p className="font-display text-3xl">No machines match those filters.</p>
-              <p className="mt-2 text-muted">Try widening your budget — or ask us, we can source almost any model.</p>
+              <p className="mt-2 text-muted">Try another drink or brand — or ask us, we can source almost any model.</p>
               <button type="button" onClick={reset} className="btn btn-primary mt-6">
                 Reset filters
               </button>

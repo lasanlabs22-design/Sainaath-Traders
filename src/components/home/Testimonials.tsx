@@ -5,9 +5,9 @@ import { Icon } from "@/components/ui/Icon";
 
 export function Testimonials() {
   return (
-    <section className="container-luxe py-20 sm:py-28">
+    <section className="container-luxe py-14 sm:py-20">
       <SectionHeading eyebrow="Kind words" title={<>Brewing smiles across <em className="text-brass-deep">Andhra</em></>} telugu="మా వినియోగదారుల మాటల్లో" />
-      <div className="no-scrollbar -mx-4 mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0">
+      <div className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0">
         {testimonials.map((t, i) => (
           <Reveal as="article" key={i} delay={i * 100} className="w-[85%] shrink-0 snap-center md:w-auto">
             <figure className="relative flex h-full flex-col rounded-[1.75rem] border border-line bg-cream p-7 sm:p-8">

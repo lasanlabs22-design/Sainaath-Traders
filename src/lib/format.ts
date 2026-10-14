@@ -8,7 +8,9 @@ export function formatPrice(price: number | null): string {
 }
 
 export function machineTitle(m: Pick<Machine, "brand" | "name">): string {
-  return `${m.brand} ${m.name}`;
+  // Many names already lead with the brand ("Tata MyBistro", "NESCAFÉ Premium") — don't repeat it.
+  const first = m.brand.split(" ")[0].toLowerCase();
+  return m.name.toLowerCase().startsWith(first) ? m.name : `${m.brand} ${m.name}`;
 }
 
 export function whatsappLink(message: string): string {

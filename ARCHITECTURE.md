@@ -1,4 +1,4 @@
-# Kaapi House — Architecture
+# Sainaath Traders — Architecture
 
 Premium coffee-machine showroom site for Guntur & Vijayawada. POC built on **Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4**.
 
@@ -6,7 +6,7 @@ Premium coffee-machine showroom site for Guntur & Vijayawada. POC built on **Nex
 
 | Goal | How it's met |
 |---|---|
-| Premium + traditional look | Espresso/brass/ivory palette, Cormorant Garamond serif, Telugu accents (Noto Serif Telugu), kolam dot-grids, temple-arch frames, lotus dividers, dabara-tumbler monogram |
+| Premium + traditional look | Espresso/brass/ivory palette, Cormorant Garamond serif, Telugu accents (Noto Serif Telugu), kolam dot-grids, temple-arch frames, lotus dividers, Sainaath Traders logo (cut from client posters) |
 | Mobile-first | Every layout designed at 390px first; mobile drawer nav, swipe rails, filter bottom-sheet, sticky Call/WhatsApp bar on product pages, 44px+ tap targets, safe-area insets |
 | Lead generation | WhatsApp deep links with pre-filled messages everywhere, enquiry form → `/api/enquiry`, click-to-call, "Book a demo" CTAs |
 | Local SEO | Static pre-rendering, per-page metadata, `Store` + `Product` JSON-LD, sitemap.xml, robots.txt, city keywords |
@@ -25,7 +25,7 @@ src/
 │  ├─ about/page.tsx            Story + milestones
 │  ├─ contact/page.tsx          Enquiry form + showrooms with maps
 │  ├─ api/enquiry/route.ts      Lead intake endpoint
-│  ├─ sitemap.ts · robots.ts · not-found.tsx · icon.svg
+│  ├─ sitemap.ts · robots.ts · not-found.tsx · icon.png
 │  └─ globals.css               Design tokens (@theme) + motif utilities
 ├─ components/
 │  ├─ layout/    Header (client), Footer, Logo, WhatsAppFab

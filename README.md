@@ -1,4 +1,4 @@
-# Kaapi House — Coffee Machine Showroom (POC)
+# Sainaath Traders — Coffee Machine Showroom (POC)
 
 Premium, mobile-first website for a coffee-machine dealer in Guntur & Vijayawada. Built with Next.js 16, React 19, TypeScript and Tailwind CSS v4.
 

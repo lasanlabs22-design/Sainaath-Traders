@@ -13,7 +13,7 @@ const steps = [
 
 export function Journey() {
   return (
-    <section className="relative overflow-hidden bg-espresso py-20 text-ivory sm:py-28">
+    <section className="relative overflow-hidden bg-espresso py-14 text-ivory sm:py-20">
       <div className="kolam-dark absolute inset-0 opacity-50" />
       <div className="container-luxe relative">
         <SectionHeading
@@ -37,7 +37,7 @@ export function Journey() {
           ))}
         </ol>
 
-        <ul className="mt-14 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
+        <ul className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
           {services.map((s) => (
             <li key={s.title} className="text-center">
               <span className="mx-auto grid size-14 place-items-center rounded-full border border-brass/40 text-brass-light">

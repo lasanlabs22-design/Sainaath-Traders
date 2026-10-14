@@ -21,11 +21,11 @@ export function Footer() {
               ప్రతి కప్పులో సంప్రదాయం
             </p>
             <div className="mt-6 flex gap-3">
-              {(["instagram", "facebook", "youtube"] as const).map((s) => (
+              {(["instagram", "facebook", "youtube"] as const).filter((s) => site.social[s]).map((s) => (
                 <a
                   key={s}
                   href={site.social[s]}
-                  aria-label={s}
+                  aria-label={`${site.name} on ${s}`}
                   target="_blank"
                   rel="noopener"
                   className="grid size-10 place-items-center rounded-full border border-white/15 transition-colors hover:border-brass-light hover:text-brass-light"
@@ -80,9 +80,16 @@ export function Footer() {
         <LotusDivider light className="mt-16" />
         <div className="mt-6 flex flex-col items-center justify-between gap-3 text-xs text-ivory/50 sm:flex-row">
           <p>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.name}. All rights reserved. · FSSAI Lic. No. {site.fssaiLicence}
           </p>
-          <p>Brand names belong to their respective owners. Prices are indicative.</p>
+          <nav aria-label="Legal" className="flex gap-5">
+            <Link href="/privacy" className="hover:text-brass-light">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-brass-light">
+              Terms &amp; Conditions
+            </Link>
+          </nav>
         </div>
       </div>
     </footer>

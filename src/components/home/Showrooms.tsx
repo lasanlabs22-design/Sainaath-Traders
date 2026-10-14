@@ -6,7 +6,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export function Showrooms({ withMaps = false, heading = true }: { withMaps?: boolean; heading?: boolean }) {
   return (
-    <section className="container-luxe py-20 sm:py-28">
+    <section className="container-luxe py-14 sm:py-20">
       {heading && (
         <SectionHeading
           eyebrow="Visit us"
@@ -19,7 +19,7 @@ export function Showrooms({ withMaps = false, heading = true }: { withMaps?: boo
           intro="Taste before you buy. Every machine on display is ready to brew — and the coffee is always on us."
         />
       )}
-      <div className={`grid gap-5 md:grid-cols-2 ${heading ? "mt-14" : ""}`}>
+      <div className={`grid gap-5 md:grid-cols-2 ${heading ? "mt-10" : ""}`}>
         {showrooms.map((s, i) => (
           <Reveal key={s.city} delay={i * 120}>
             <article className="group relative h-full overflow-hidden rounded-[2rem] border border-line bg-cream">
@@ -57,7 +57,7 @@ export function Showrooms({ withMaps = false, heading = true }: { withMaps?: boo
                       <Icon name="phone" className="size-4" /> Call {s.city}
                     </a>
                     <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapQuery)}`}
+                      href={s.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapQuery)}`}
                       target="_blank"
                       rel="noopener"
                       className="btn btn-ghost"

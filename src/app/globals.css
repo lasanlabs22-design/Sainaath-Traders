@@ -18,6 +18,8 @@
   --color-brass-deep: #84652c;
   --color-kumkum: #8e2b1d;
   --color-leaf: #3f5a3c;
+  /* Backdrop baked into every machine cut-out (public/images/machines) */
+  --color-stage: #221610;
 
   --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-sans: var(--font-manrope), system-ui, sans-serif;
@@ -142,11 +144,16 @@
 .marquee {
   animation: marquee 40s linear infinite;
 }
+/* Product rails: slower, reversible, pause on hover/focus */
+.marquee-slow { animation: marquee var(--marquee-duration, 120s) linear infinite; }
+.marquee-reverse { animation-direction: reverse; }
+.marquee-pause:hover .marquee-slow,
+.marquee-pause:focus-within .marquee-slow { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .steam path, .marquee { animation: none; }
+  .steam path, .marquee, .marquee-slow { animation: none; }
 }
 
 /* Pages with a sticky mobile action bar already offer WhatsApp */

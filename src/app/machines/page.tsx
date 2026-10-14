@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getAllMachines, getCategories } from "@/lib/catalog";
+import { getAllMachines, getCategories, getMachineBrands } from "@/lib/catalog";
+import { MachineBrands } from "@/components/machines/MachineBrands";
 import type { CategorySlug } from "@/lib/types";
 import { PageHero } from "@/components/ui/PageHero";
 import { Catalogue } from "@/components/machines/Catalogue";
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function MachinesPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
-  const [{ category }, machines, categories] = await Promise.all([searchParams, getAllMachines(), getCategories()]);
+  const [{ category }, machines, categories, brands] = await Promise.all([searchParams, getAllMachines(), getCategories(), getMachineBrands()]);
   const initial = categories.some((c) => c.slug === category) ? (category as CategorySlug) : undefined;
 
   return (
@@ -27,7 +28,16 @@ export default async function MachinesPage({ searchParams }: { searchParams: Pro
         intro="Every machine here can be tasted at our showrooms or demonstrated at your home. Prices are indicative — ask us for current offers and EMI plans."
         crumbs={[{ href: "/machines", label: "Machines" }]}
       />
+      <section className="container-luxe pt-10 sm:pt-14">
+        <h2 className="mb-6 text-3xl sm:text-4xl">
+          Shop by <em className="text-brass-deep">brand</em>
+        </h2>
+        <MachineBrands brands={brands} />
+      </section>
       <section className="container-luxe py-10 sm:py-14">
+        <h2 className="mb-6 text-3xl sm:text-4xl">
+          All <em className="text-brass-deep">{machines.length} machines</em>
+        </h2>
         <Catalogue key={initial ?? "all"} machines={machines} categories={categories} initialCategory={initial} />
       </section>
       <CtaBand title="Can’t decide? Let us help." body="Tell us how many cups you brew a day and your budget — we’ll shortlist the right three machines for you." />

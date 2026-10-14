@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllMachines, getCategory, getMachine, getRelatedMachines } from "@/lib/catalog";
+import { brandHref, brandSlug, getAllMachines, getCategory, getMachine, getMachineBrand, getRelatedMachines } from "@/lib/catalog";
 import { formatPrice, machineEnquiryMessage, machineTitle, telLink, whatsappLink } from "@/lib/format";
 import type { MachineSpecs } from "@/lib/types";
 import { site } from "@/data/site";
@@ -27,13 +28,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 const specLabels: Record<keyof MachineSpecs, string> = {
+  display: "Display & selection",
+  speed: "Dispensing speed",
+  capacity: "Capacity",
   pressure: "Pump pressure",
-  boiler: "Heating system",
-  waterTank: "Water tank",
-  grinder: "Grinder",
+  boiler: "Boiler",
+  waterTank: "Water supply",
+  grinder: "Grinder / hoppers",
   power: "Power",
   dimensions: "Dimensions (W × D × H)",
   weight: "Weight",
+  material: "Body",
   warranty: "Warranty",
 };
 
@@ -49,7 +54,7 @@ export default async function MachinePage({ params }: Params) {
   const machine = await getMachine((await params).slug);
   if (!machine) notFound();
 
-  const related = await getRelatedMachines(machine);
+  const [related, brand] = await Promise.all([getRelatedMachines(machine), getMachineBrand(brandSlug(machine.brand))]);
   const category = getCategory(machine.category);
   const title = machineTitle(machine);
   const wa = whatsappLink(machineEnquiryMessage(machine));
@@ -85,8 +90,8 @@ export default async function MachinePage({ params }: Params) {
           </li>
           <li aria-hidden="true">/</li>
           <li>
-            <Link href={`/machines?category=${category.slug}`} className="hover:text-brass-deep">
-              {category.name}
+            <Link href={brand && brand.models.length > 1 ? brandHref(brand) : `/machines?category=${category.slug}`} className="hover:text-brass-deep">
+              {machine.brand}
             </Link>
           </li>
           <li aria-hidden="true">/</li>
@@ -94,7 +99,7 @@ export default async function MachinePage({ params }: Params) {
         </ol>
       </nav>
 
-      <section className="container-luxe grid gap-10 py-8 sm:py-12 lg:grid-cols-2 lg:gap-16">
+      <section className="container-luxe grid gap-8 py-6 sm:py-8 lg:grid-cols-2 lg:gap-16">
         <ProductShowcase machine={machine} />
 
         <div>
@@ -121,6 +126,20 @@ export default async function MachinePage({ params }: Params) {
           </div>
 
           <p className="mt-6 leading-relaxed text-ink/85">{machine.description}</p>
+
+          {machine.beverages && machine.beverages.length > 0 && (
+            <div className="mt-6">
+              <p className="eyebrow">Menu · {machine.beverages.length} drinks</p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {machine.beverages.map((b) => (
+                  <li key={b} className="flex items-center gap-1.5 rounded-full border border-line bg-ivory px-3 py-1 text-sm">
+                    <Icon name="cup" className="size-3.5 text-brass-deep" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <ul className="mt-6 grid gap-3 sm:grid-cols-2">
             {machine.highlights.map((h) => (
@@ -154,6 +173,12 @@ export default async function MachinePage({ params }: Params) {
               Book a free demo
             </Link>
           </div>
+          <p className="mt-3 text-sm text-muted">
+            Demos are arranged by {site.demoContact.name} —{" "}
+            <a href={telLink(site.demoContact.phone)} className="font-semibold text-espresso underline-offset-4 hover:underline">
+              {site.demoContact.phone}
+            </a>
+          </p>
 
           <ul className="mt-8 grid gap-3 rounded-3xl border border-line bg-cream p-5 sm:grid-cols-3">
             {assurances.map((a) => (
@@ -178,6 +203,27 @@ export default async function MachinePage({ params }: Params) {
               </dl>
               <p className="mt-3 text-xs text-muted">Specifications are indicative and may vary by batch. Please confirm with our team before purchase.</p>
             </div>
+          )}
+
+          {machine.poster && (
+            <a
+              href={machine.poster}
+              target="_blank"
+              rel="noopener"
+              className="group mt-10 flex items-center gap-5 rounded-3xl border border-line bg-cream p-4 transition-colors hover:border-brass"
+            >
+              <span className="relative h-28 w-20 shrink-0 overflow-hidden rounded-xl border border-line bg-stage">
+                <Image src={machine.poster} alt="" fill sizes="80px" className="object-cover object-top" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="eyebrow block">Brochure</span>
+                <span className="mt-1 block font-display text-2xl leading-tight">Full specification sheet</span>
+                <span className="mt-1 block text-sm text-muted">Opens in a new tab — easy to share on WhatsApp.</span>
+              </span>
+              <span className="grid size-11 shrink-0 place-items-center rounded-full border border-line text-espresso transition-colors group-hover:border-espresso group-hover:bg-espresso group-hover:text-brass-light">
+                <Icon name="arrow" className="size-4" />
+              </span>
+            </a>
           )}
         </div>
       </section>

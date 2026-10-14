@@ -14,7 +14,7 @@ export function SectionHeading({ eyebrow, title, telugu, intro, align = "center"
   return (
     <div className={centered ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
       <p className={`eyebrow ${light ? "text-brass-light" : ""}`}>{eyebrow}</p>
-      <h2 className={`mt-4 text-4xl leading-[1.05] sm:text-5xl ${light ? "text-ivory" : ""}`}>{title}</h2>
+      <h2 className={`mt-3 text-4xl leading-[1.05] sm:text-[2.75rem] ${light ? "text-ivory" : ""}`}>{title}</h2>
       {telugu && (
         <p lang="te" className={`mt-2 font-telugu text-base ${light ? "text-brass-light/80" : "text-brass-deep"}`}>
           {telugu}

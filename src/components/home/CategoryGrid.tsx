@@ -1,53 +1,60 @@
+import Image from "next/image";
 import Link from "next/link";
 import { categories, machines } from "@/data/machines";
-import { MachineVisual } from "@/components/machines/MachineVisual";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 
-const tones = ["#b9bcc0", "#2b2b2d", "#8d1d22", "#e8dcc4"];
+/** Machines shown side by side on each category's stage. */
+const covers: Record<string, number[]> = {
+  premix: [190, 195, 177],
+  "bean-to-cup": [197, 199, 187],
+};
 
 export function CategoryGrid() {
   return (
-    <section className="container-luxe py-20 sm:py-28">
+    <section className="container-luxe py-14 sm:py-20">
       <SectionHeading
         eyebrow="Find your machine"
         title={
           <>
-            Four ways to a <em className="text-brass-deep">perfect cup</em>
+            Two ways to a <em className="text-brass-deep">perfect cup</em>
           </>
         }
         telugu="మీకు సరైన యంత్రాన్ని ఎంచుకోండి"
-        intro="Whether it’s a quiet morning ritual or a café serving five hundred cups a day, we’ll match you with the right machine."
+        intro="Whether it’s a 2-option pantry machine or a touchscreen serving 150 cups a day, we’ll match you with the right machine — and keep it stocked."
       />
 
-      <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {categories.map((c, i) => {
-          const count = machines.filter((m) => m.category === c.slug).length;
-          return (
-            <Reveal key={c.slug} delay={i * 90}>
-              <Link
-                href={`/machines?category=${c.slug}`}
-                className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-cream p-6 transition-all duration-500 ease-luxe hover:-translate-y-1 hover:bg-espresso"
-              >
-                <div className="kolam absolute inset-0 opacity-30 transition-opacity group-hover:opacity-0" />
-                <div className="kolam-dark absolute inset-0 opacity-0 transition-opacity group-hover:opacity-60" />
-                <div className="relative flex items-start justify-between">
-                  <span className="font-display text-sm text-brass-deep group-hover:text-brass-light">0{i + 1}</span>
-                  <span className="rounded-full border border-line px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-widest text-muted group-hover:border-white/20 group-hover:text-ivory/60">
-                    {count} models
-                  </span>
-                </div>
-                <MachineVisual kind={c.visual} color={tones[i]} className="relative mx-auto my-4 h-44 w-44 transition-transform duration-700 ease-luxe group-hover:scale-105" />
-                <h3 className="relative text-3xl transition-colors group-hover:text-ivory">{c.name}</h3>
-                <p lang="te" className="relative font-telugu text-sm text-brass-deep group-hover:text-brass-light/80">
+      <div className="mt-10 grid gap-5 md:grid-cols-2">
+        {categories.map((c, i) => (
+          <Reveal key={c.slug} delay={i * 90}>
+            <Link
+              href={`/machines?category=${c.slug}`}
+              className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-line bg-ivory transition-all duration-500 ease-luxe hover:-translate-y-1 hover:border-brass/60 hover:shadow-[0_30px_60px_-30px_rgba(43,27,18,0.45)]"
+            >
+              <div className="relative flex h-60 items-end justify-center gap-2 overflow-hidden bg-stage px-6 pt-6 sm:h-64">
+                <div className="kolam-dark absolute inset-0 opacity-40" />
+                <div className="absolute inset-x-16 top-1/4 h-1/2 rounded-full bg-brass/20 blur-3xl" />
+                {covers[c.slug].map((id, j) => (
+                  <div key={id} className={`relative h-full flex-1 transition-transform duration-700 ease-luxe ${j === 1 ? "z-10 scale-110 group-hover:scale-[1.15]" : "opacity-80 group-hover:scale-105"}`}>
+                    <Image src={`/images/machines/${id}.webp`} alt="" fill sizes="(min-width: 768px) 16vw, 30vw" className="object-contain" />
+                  </div>
+                ))}
+                <span className="absolute right-5 top-5 rounded-full border border-white/15 bg-stage/70 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-widest text-ivory/70 backdrop-blur">
+                  {machines.filter((m) => m.category === c.slug).length} models
+                </span>
+              </div>
+              <div className="flex flex-1 flex-col p-6">
+                <span className="font-display text-sm text-brass-deep">0{i + 1}</span>
+                <h3 className="mt-1 text-3xl sm:text-4xl">{c.name}</h3>
+                <p lang="te" className="font-telugu text-sm text-brass-deep">
                   {c.telugu}
                 </p>
-                <p className="relative mt-3 text-sm leading-relaxed text-muted transition-colors group-hover:text-ivory/65">{c.blurb}</p>
-                <span className="relative mt-5 text-sm font-semibold text-espresso group-hover:text-brass-light">Browse →</span>
-              </Link>
-            </Reveal>
-          );
-        })}
+                <p className="mt-3 text-sm leading-relaxed text-muted">{c.blurb}</p>
+                <span className="mt-5 text-sm font-semibold text-espresso group-hover:text-brass-deep">Browse →</span>
+              </div>
+            </Link>
+          </Reveal>
+        ))}
       </div>
     </section>
   );
