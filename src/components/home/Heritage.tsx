@@ -1,3 +1,4 @@
+import { site } from "@/data/site";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { LotusDivider } from "@/components/ui/Ornament";
@@ -60,7 +61,7 @@ const pillars = [
 
 export function Heritage() {
   return (
-    <section className="container-luxe py-20 sm:py-28">
+    <section className="container-luxe py-14 sm:py-20">
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <Reveal className="relative mx-auto w-full max-w-md">
           <div className="arch relative aspect-[4/4.6] overflow-hidden border border-line bg-gradient-to-b from-sand via-cream to-ivory p-8">
@@ -72,7 +73,7 @@ export function Heritage() {
           </div>
           <div className="absolute -right-2 bottom-12 rounded-full bg-kumkum px-5 py-3 text-center text-ivory shadow-xl sm:-right-8">
             <p className="font-display text-2xl leading-none">Since</p>
-            <p className="text-xs tracking-[0.25em]">2014</p>
+            <p className="text-xs tracking-[0.25em]">{site.established}</p>
           </div>
         </Reveal>
 

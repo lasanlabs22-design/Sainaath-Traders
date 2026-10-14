@@ -36,7 +36,7 @@ export default function AboutPage() {
       <section className="bg-cream py-20 sm:py-28">
         <div className="container-luxe max-w-4xl">
           <p className="eyebrow text-center">Milestones</p>
-          <h2 className="mt-4 text-center text-4xl sm:text-5xl">A decade of brewing</h2>
+          <h2 className="mt-4 text-center text-4xl sm:text-5xl">{new Date().getFullYear() - Number(site.established)}+ years of brewing</h2>
           <ol className="relative mt-14 space-y-10 border-l border-brass/40 pl-8 sm:pl-12">
             {milestones.map((m, i) => (
               <Reveal as="li" key={m.year} delay={i * 80} className="relative">

@@ -12,8 +12,8 @@ export function CtaBand({
   body?: string;
 }) {
   return (
-    <section className="container-luxe pb-20 sm:pb-28">
-      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brass-light via-brass to-brass-deep px-6 py-14 text-center sm:rounded-[2.5rem] sm:px-12 sm:py-20">
+    <section className="container-luxe pb-14 sm:pb-20">
+      <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brass-light via-brass to-brass-deep px-6 py-12 text-center sm:rounded-[2.5rem] sm:px-12 sm:py-14">
         <KolamRosette className="absolute -left-10 -top-10 size-56 text-espresso/10" />
         <KolamRosette className="absolute -bottom-12 -right-10 size-64 text-espresso/10" />
         <p className="eyebrow relative text-espresso/70">Free home demo</p>

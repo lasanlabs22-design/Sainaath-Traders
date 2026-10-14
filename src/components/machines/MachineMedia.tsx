@@ -15,8 +15,9 @@ interface Props {
 }
 
 /**
- * Renders the product photo if one is supplied, otherwise the illustrated
- * placeholder. Wrap in an arch frame for the signature look.
+ * Renders the machine photo if one is supplied, otherwise the illustrated
+ * placeholder. Photos are 4:5 cut-outs on the shared `bg-stage` colour, so
+ * place this inside a `bg-stage` frame for a seamless edge.
  */
 export function MachineMedia({ machine, index = 0, finishColor, sizes = "(min-width: 1024px) 33vw, 100vw", priority, steam, className = "" }: Props) {
   const src = machine.images[index];
@@ -25,7 +26,7 @@ export function MachineMedia({ machine, index = 0, finishColor, sizes = "(min-wi
   if (src) {
     return (
       <div className={`relative ${className}`}>
-        <Image src={src} alt={title} fill sizes={sizes} priority={priority} className="object-contain p-6 drop-shadow-2xl" />
+        <Image src={src} alt={title} fill sizes={sizes} priority={priority} className="object-contain" />
       </div>
     );
   }

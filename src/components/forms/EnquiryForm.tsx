@@ -1,52 +1,69 @@
 "use client";
 
 import { useState } from "react";
-import { cities, enquiryTypes, validateEnquiry, type EnquiryErrors } from "@/lib/enquiry";
+import Link from "next/link";
+import { cities, enquiryTypes, validateEnquiry, type Enquiry, type EnquiryErrors } from "@/lib/enquiry";
 import { site } from "@/data/site";
 import { whatsappLink } from "@/lib/format";
 import { Icon } from "@/components/ui/Icon";
 
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "sent";
+
+function enquiryMessage(data: Enquiry): string {
+  return [
+    `Hello ${site.name}, I'd like to: *${data.type}*`,
+    "",
+    `Name: ${data.name}`,
+    `Mobile: ${data.phone}`,
+    `City: ${data.city}`,
+    data.machine && `Machine: ${data.machine}`,
+    data.message && `Message: ${data.message}`,
+  ]
+    .filter((l) => l !== undefined)
+    .join("\n");
+}
 
 export function EnquiryForm({ machines, defaultMachine }: { machines: { slug: string; label: string }[]; defaultMachine?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<EnquiryErrors>({});
-  const [summary, setSummary] = useState("");
+  const [waUrl, setWaUrl] = useState("");
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const raw = Object.fromEntries(new FormData(e.currentTarget));
     const { data, errors } = validateEnquiry(raw);
     setErrors(errors);
     if (!data) return;
 
-    setStatus("sending");
-    try {
-      const res = await fetch("/api/enquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-      if (!res.ok) throw new Error(await res.text());
-      setSummary(
-        `Hello ${site.name}, I'm ${data.name} from ${data.city}. I'd like to: ${data.type}${data.machine ? ` — ${data.machine}` : ""}.${data.message ? ` ${data.message}` : ""}`,
-      );
-      setStatus("sent");
-    } catch {
-      setStatus("error");
-    }
+    // Open WhatsApp synchronously, inside the click, so browsers don't block it as a pop-up.
+    const url = whatsappLink(enquiryMessage(data));
+    setWaUrl(url);
+    // ("noopener" as a feature makes window.open return null, so detach the opener manually.)
+    const tab = window.open(url, "_blank");
+    if (tab) tab.opener = null;
+    else window.location.href = url;
+
+    // Keep a server-side copy of the lead; WhatsApp is the primary channel, so don't wait on it.
+    fetch("/api/enquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data), keepalive: true }).catch(() => {});
+    setStatus("sent");
   }
 
   if (status === "sent") {
     return (
       <div className="rounded-[2rem] border border-brass/40 bg-cream p-8 text-center sm:p-12" role="status">
-        <span className="mx-auto grid size-16 place-items-center rounded-full bg-espresso text-brass-light">
-          <Icon name="check" className="size-7" />
+        <span className="mx-auto grid size-16 place-items-center rounded-full bg-[#25D366] text-white">
+          <Icon name="whatsapp" className="size-8" />
         </span>
-        <h3 className="mt-6 text-4xl">Thank you!</h3>
-        <p lang="te" className="mt-1 font-telugu text-brass-deep">
-          ధన్యవాదాలు
-        </p>
-        <p className="mx-auto mt-4 max-w-sm text-muted">Our team will call you within working hours. For a faster reply, continue the conversation on WhatsApp.</p>
-        <a href={whatsappLink(summary)} target="_blank" rel="noopener" className="btn btn-brass mt-8">
-          <Icon name="whatsapp" /> Continue on WhatsApp
-        </a>
+        <h3 className="mt-6 text-4xl">Opening WhatsApp…</h3>
+        <p className="mx-auto mt-4 max-w-sm text-muted">Your enquiry is ready in WhatsApp — just tap send. If it didn’t open, use the button below.</p>
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <a href={waUrl} target="_blank" rel="noopener" className="btn btn-brass">
+            <Icon name="whatsapp" /> Open WhatsApp
+          </a>
+          <button type="button" onClick={() => setStatus("idle")} className="btn btn-ghost">
+            Edit enquiry
+          </button>
+        </div>
       </div>
     );
   }
@@ -120,16 +137,17 @@ export function EnquiryForm({ machines, defaultMachine }: { machines: { slug: st
       </label>
 
       <div className="flex flex-col items-start gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-muted">We’ll only use your number to respond to this enquiry.</p>
-        <button type="submit" disabled={status === "sending"} className="btn btn-primary w-full disabled:opacity-60 sm:w-auto">
-          {status === "sending" ? "Sending…" : "Send enquiry"} <Icon name="arrow" className="size-4" />
+        <p className="text-xs text-muted">
+          We’ll only use your number to respond to this enquiry. See our{" "}
+          <Link href="/privacy" className="font-semibold text-brass-deep hover:underline">
+            Privacy Policy
+          </Link>
+          .
+        </p>
+        <button type="submit" className="btn btn-brass w-full sm:w-auto">
+          <Icon name="whatsapp" /> Send enquiry on WhatsApp
         </button>
       </div>
-      {status === "error" && (
-        <p className="text-sm text-kumkum sm:col-span-2" role="alert">
-          Something went wrong. Please try again, or reach us on WhatsApp.
-        </p>
-      )}
     </form>
   );
 }
