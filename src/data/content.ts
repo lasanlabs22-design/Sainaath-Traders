@@ -40,25 +40,26 @@ export const promises = [
   { label: "Local service", sub: "Guntur & Vijayawada" },
 ] as const;
 
+/** SAMPLE testimonials for the POC — names and quotes are placeholders, not real customers. Replace with real reviews (with permission) before launch. */
 export const testimonials: Testimonial[] = [
   {
     quote:
       "They came home, made filter-strength coffee on the espresso machine for my father, and he was sold. Installation was the next day.",
-    name: "Customer name",
+    name: "Ramesh K.",
     role: "Home customer",
     city: "Guntur",
   },
   {
     quote:
       "We run two cafés on Appia machines from them. When a pump failed on a Sunday, their technician was there within hours.",
-    name: "Customer name",
+    name: "Lakshmi P.",
     role: "Café owner",
     city: "Vijayawada",
   },
   {
     quote:
       "The office rental plan was simple — machine, beans and monthly service in one bill. Our team loves the bean-to-cup.",
-    name: "Customer name",
+    name: "Srinivas R.",
     role: "Office administrator",
     city: "Vijayawada",
   },
