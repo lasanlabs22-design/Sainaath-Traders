@@ -2,13 +2,14 @@ import Link from "next/link";
 import type { Machine } from "@/lib/types";
 import { formatPrice, machineTitle } from "@/lib/format";
 import { site } from "@/data/site";
+import { machines } from "@/data/machines";
 import { MachineMedia } from "@/components/machines/MachineMedia";
 import { KolamRosette } from "@/components/ui/Ornament";
 import { Icon } from "@/components/ui/Icon";
 
 const stats = [
   { value: `${new Date().getFullYear() - Number(site.established)}+`, label: "Years brewing" },
-  { value: "26", label: "Machines" },
+  { value: String(machines.length), label: "Machines" },
   { value: "90+", label: "Premixes & teas" },
 ];
 

@@ -42,6 +42,7 @@ export const brandSlug = (brand: string) =>
     .replace(/^-|-$/g, "");
 
 const brandBlurbs: Record<string, string> = {
+  Astoria: "Traditional Italian espresso machines for cafés.",
   Atlantis: "Rugged instant-premix machines that refresh, always.",
   BRU: "South India’s favourite coffee, on tap in your office.",
   "Café Desire": "From bottle-fed classics to the 18-drink Insta Bean.",

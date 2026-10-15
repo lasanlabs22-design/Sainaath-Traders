@@ -1,4 +1,4 @@
-export type CategorySlug = "premix" | "bean-to-cup";
+export type CategorySlug = "premix" | "bean-to-cup" | "espresso";
 
 export type UseCase = "home" | "office" | "cafe";
 

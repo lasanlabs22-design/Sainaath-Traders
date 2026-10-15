@@ -22,6 +22,13 @@ export const categories: Category[] = [
     blurb: "Fresh-ground espresso, cappuccino and latte on a touchscreen — café quality for premium offices and lounges.",
     visual: "superauto",
   },
+  {
+    slug: "espresso",
+    name: "Traditional Espresso",
+    telugu: "ఎస్ప్రెస్సో మెషీన్లు",
+    blurb: "Barista-operated Italian espresso machines with portafilters and steam wands — for cafés, restaurants and hotels.",
+    visual: "espresso",
+  },
 ];
 
 /** Machine cut out of its poster, on the shared dark stage (see public/images/machines). */
@@ -45,6 +52,31 @@ const beanDefaults: Pick<Machine, "category" | "idealFor" | "price" | "finishes"
 };
 
 export const machines: Machine[] = [
+  // ── Astoria ─────────────────────────────────────────────────
+  // Not from the poster set: product photo supplied in chat (2026-10-15),
+  // cut onto the stage by hand. No spec sheet was supplied, so only what the
+  // photo shows and the SAE (volumetric) version's keypad are listed.
+  {
+    category: "espresso",
+    idealFor: ["cafe"],
+    price: null,
+    finishes: [],
+    visual: "espresso",
+    slug: "astoria-tanya-r",
+    name: "Astoria Tanya R",
+    brand: "Astoria",
+    model: "SAE · 2-group semi-automatic",
+    tagline: "Italian espresso, barista-style.",
+    description:
+      "A traditional Italian two-group espresso machine in red and polished steel. The barista grinds, tamps and locks in the portafilters; volumetric keypads then dose each shot. Twin steam wands and a hot-water tap round it out for cafés, restaurants and hotel counters. Pairs with a separate coffee grinder.",
+    highlights: ["Two brewing groups", "Programmable volumetric dose keypads", "Twin steam wands", "Hot-water tap & cup-warmer top"],
+    beverages: ["Espresso", "Cappuccino", "Latte", "Americano", "Hot Water"],
+    specs: { display: "Push-button volumetric keypads (no touchscreen)", grinder: "Not built in — use a separate grinder" },
+    images: ["/images/machines/astoria-tanya-r.webp"],
+    featured: true,
+    badge: "New",
+  },
+
   // ── Atlantis ────────────────────────────────────────────────
   {
     ...premixDefaults,
@@ -254,7 +286,7 @@ export const machines: Machine[] = [
   {
     ...premixDefaults,
     slug: "granules-n-beans-2-line",
-    name: "GB 2-Line Vending",
+    name: "GnB 2-Line Vending",
     brand: "Granules n Beans",
     model: "2-line premix",
     tagline: "Perfect beverages. Every time.",
@@ -269,7 +301,7 @@ export const machines: Machine[] = [
   {
     ...premixDefaults,
     slug: "granules-n-beans-4-line",
-    name: "GB 4-Line Vending",
+    name: "GnB 4-Line Vending",
     brand: "Granules n Beans",
     model: "4-line premix",
     tagline: "Perfect beverages. Every time.",
@@ -284,7 +316,7 @@ export const machines: Machine[] = [
   {
     ...beanDefaults,
     slug: "granules-n-beans-bean-to-cup-steel",
-    name: "GB Bean-to-Cup Steel",
+    name: "GnB Bean-to-Cup Steel",
     brand: "Granules n Beans",
     model: "Bean-to-cup, LCD",
     tagline: "Precision. Performance. Perfection.",
@@ -299,7 +331,7 @@ export const machines: Machine[] = [
   {
     ...beanDefaults,
     slug: "granules-n-beans-bean-to-cup-touch",
-    name: "GB Bean-to-Cup Touch",
+    name: "GnB Bean-to-Cup Touch",
     brand: "Granules n Beans",
     model: "Bean-to-cup, 7″ touch",
     tagline: "Precision. Performance. Perfection.",
