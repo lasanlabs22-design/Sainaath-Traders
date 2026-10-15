@@ -62,7 +62,7 @@ export function Hero({ spotlight }: { spotlight: Machine }) {
           </div>
 
           <div className="relative mx-auto w-full max-w-sm sm:max-w-md lg:flex lg:h-full lg:max-w-none lg:items-center lg:justify-center">
-            <div className="arch relative aspect-[4/4.6] w-full overflow-hidden border border-brass/40 bg-stage p-2 lg:h-[calc(100%_-_1.5rem)] lg:w-auto">
+            <div className="arch relative aspect-[4/4.6] w-full overflow-hidden border border-brass/40 stage p-2 lg:h-[calc(100%_-_1.5rem)] lg:w-auto">
               <div className="arch absolute inset-3 border border-brass/25" />
               <div className="absolute inset-x-10 top-1/4 h-1/2 rounded-full bg-brass/15 blur-3xl" />
               <MachineMedia machine={spotlight} priority steam sizes="(min-width: 1024px) 34vw, 90vw" className="h-full w-full" />

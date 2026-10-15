@@ -40,8 +40,8 @@ export function MachineBrands({ brands }: { brands: MachineBrand[] }) {
                 </p>
               )}
 
-              {/* One dark stage holding up to three machines side by side — same height for every brand. */}
-              <div className="relative mt-5 flex h-56 items-end justify-center gap-1 overflow-hidden rounded-2xl bg-stage px-2 sm:h-60">
+              {/* One light stage holding up to three machines side by side — same height for every brand. */}
+              <div className="relative mt-5 flex h-56 items-end justify-center gap-1 overflow-hidden rounded-2xl stage px-2 sm:h-60">
                 <div className="absolute inset-x-6 top-1/4 h-1/2 rounded-full bg-brass/15 blur-3xl" />
                 {thumbs.map((m) => (
                   <div key={m.slug} className={`relative h-full ${thumbs.length === 1 ? "w-3/5" : "flex-1"}`}>

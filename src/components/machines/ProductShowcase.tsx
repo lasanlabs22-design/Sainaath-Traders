@@ -15,7 +15,7 @@ export function ProductShowcase({ machine }: { machine: Machine }) {
   return (
     <div className="lg:sticky lg:top-28 lg:self-start">
       {/* Width is derived from the viewport height so the whole 4:5 image fits on screen without scrolling. */}
-      <div className={`relative mx-auto aspect-[4/5] w-full max-w-[calc(56dvh*0.8)] overflow-hidden rounded-[2rem] border lg:max-w-[calc((100dvh_-_14rem)*0.8)] ${hasPhotos ? "border-brass/30 bg-stage" : "border-line bg-gradient-to-b from-cream via-sand to-cream"}`}>
+      <div className={`relative mx-auto aspect-[4/5] w-full max-w-[calc(56dvh*0.8)] overflow-hidden rounded-[2rem] border lg:max-w-[calc((100dvh_-_14rem)*0.8)] ${hasPhotos ? "border-brass/30 stage" : "border-line bg-gradient-to-b from-cream via-sand to-cream"}`}>
         {hasPhotos ? (
           <div className="absolute inset-x-10 top-1/4 h-1/2 rounded-full bg-brass/15 blur-3xl" />
         ) : (
@@ -33,7 +33,7 @@ export function ProductShowcase({ machine }: { machine: Machine }) {
           className="h-full w-full animate-[fadeIn_.6s_ease]"
         />
         {machine.badge && (
-          <span className="absolute left-1/2 top-7 -translate-x-1/2 rounded-full border border-brass/40 bg-stage/80 px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-brass-light backdrop-blur">
+          <span className="absolute left-1/2 top-7 -translate-x-1/2 rounded-full border border-brass/40 bg-espresso/80 px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-brass-light backdrop-blur">
             {machine.badge}
           </span>
         )}
@@ -47,7 +47,7 @@ export function ProductShowcase({ machine }: { machine: Machine }) {
               type="button"
               onClick={() => setPhoto(i)}
               aria-label={`View photo ${i + 1}`}
-              className={`relative h-24 w-20 shrink-0 overflow-hidden rounded-2xl border bg-stage ${i === photo ? "border-brass" : "border-line"}`}
+              className={`relative h-24 w-20 shrink-0 overflow-hidden rounded-2xl border stage ${i === photo ? "border-brass" : "border-line"}`}
             >
               <Image src={src} alt="" fill sizes="80px" className="object-contain" />
             </button>
