@@ -212,7 +212,7 @@ export default async function MachinePage({ params }: Params) {
               rel="noopener"
               className="group mt-10 flex items-center gap-5 rounded-3xl border border-line bg-cream p-4 transition-colors hover:border-brass"
             >
-              <span className="relative h-28 w-20 shrink-0 overflow-hidden rounded-xl border border-line bg-stage">
+              <span className="relative h-28 w-20 shrink-0 overflow-hidden rounded-xl border border-line stage">
                 <Image src={machine.poster} alt="" fill sizes="80px" className="object-cover object-top" />
               </span>
               <span className="min-w-0 flex-1">

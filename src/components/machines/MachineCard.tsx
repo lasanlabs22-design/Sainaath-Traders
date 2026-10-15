@@ -12,7 +12,7 @@ export function MachineCard({ machine, priority = false }: { machine: Machine; p
       href={`/machines/${machine.slug}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line/70 bg-ivory transition-all duration-500 ease-luxe hover:-translate-y-1 hover:border-brass/60 hover:shadow-[0_30px_60px_-30px_rgba(43,27,18,0.45)]"
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-stage">
+      <div className="relative aspect-[4/5] overflow-hidden stage">
         {/* Soft brass spotlight behind the machine */}
         <div className="absolute inset-x-8 top-1/4 h-1/2 rounded-full bg-brass/15 blur-3xl transition-opacity duration-700 group-hover:opacity-80" />
         <MachineMedia
@@ -21,9 +21,8 @@ export function MachineCard({ machine, priority = false }: { machine: Machine; p
           sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
           className="h-full w-full transition-transform duration-700 ease-luxe group-hover:scale-[1.04]"
         />
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-stage to-transparent" />
         {machine.badge && (
-          <span className="absolute left-4 top-4 whitespace-nowrap rounded-full border border-brass/40 bg-stage/80 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-brass-light backdrop-blur">
+          <span className="absolute left-4 top-4 whitespace-nowrap rounded-full border border-brass/40 bg-espresso/80 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-brass-light backdrop-blur">
             {machine.badge}
           </span>
         )}

@@ -31,7 +31,7 @@ export const categories: Category[] = [
   },
 ];
 
-/** Machine cut out of its poster, on the shared dark stage (see public/images/machines). */
+/** Machine cut out of its poster as a transparent WebP with a floor shadow (shown on the `stage` backdrop). */
 const cut = (id: number) => `/images/machines/${id}.webp`;
 const poster = (id: number) => `/images/posters/${id}.webp`;
 
