@@ -4,10 +4,11 @@ import { categories, machines } from "@/data/machines";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 
-/** Machines shown side by side on each category's stage. */
-const covers: Record<string, number[]> = {
+/** Machine images (public/images/machines/<id>.webp) shown side by side on each category's stage; the middle one is enlarged. */
+const covers: Record<string, (number | string)[]> = {
   premix: [190, 195, 177],
   "bean-to-cup": [197, 199, 187],
+  espresso: ["astoria-tanya-r"],
 };
 
 export function CategoryGrid() {
@@ -17,14 +18,14 @@ export function CategoryGrid() {
         eyebrow="Find your machine"
         title={
           <>
-            Two ways to a <em className="text-brass-deep">perfect cup</em>
+            Three ways to a <em className="text-brass-deep">perfect cup</em>
           </>
         }
         telugu="మీకు సరైన యంత్రాన్ని ఎంచుకోండి"
-        intro="Whether it’s a 2-option pantry machine or a touchscreen serving 150 cups a day, we’ll match you with the right machine — and keep it stocked."
+        intro="Whether it’s a 2-option pantry machine, a touchscreen serving 150 cups a day or a barista’s espresso machine, we’ll match you with the right machine — and keep it stocked."
       />
 
-      <div className="mt-10 grid gap-5 md:grid-cols-2">
+      <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {categories.map((c, i) => (
           <Reveal key={c.slug} delay={i * 90}>
             <Link
@@ -34,13 +35,16 @@ export function CategoryGrid() {
               <div className="relative flex h-60 items-end justify-center gap-2 overflow-hidden bg-stage px-6 pt-6 sm:h-64">
                 <div className="kolam-dark absolute inset-0 opacity-40" />
                 <div className="absolute inset-x-16 top-1/4 h-1/2 rounded-full bg-brass/20 blur-3xl" />
-                {covers[c.slug].map((id, j) => (
-                  <div key={id} className={`relative h-full flex-1 transition-transform duration-700 ease-luxe ${j === 1 ? "z-10 scale-110 group-hover:scale-[1.15]" : "opacity-80 group-hover:scale-105"}`}>
+                {covers[c.slug].map((id, j, all) => (
+                  <div key={id} className={`relative h-full flex-1 transition-transform duration-700 ease-luxe ${j === Math.floor(all.length / 2) ? "z-10 scale-110 group-hover:scale-[1.15]" : "opacity-80 group-hover:scale-105"}`}>
                     <Image src={`/images/machines/${id}.webp`} alt="" fill sizes="(min-width: 768px) 16vw, 30vw" className="object-contain" />
                   </div>
                 ))}
                 <span className="absolute right-5 top-5 rounded-full border border-white/15 bg-stage/70 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-widest text-ivory/70 backdrop-blur">
-                  {machines.filter((m) => m.category === c.slug).length} models
+                  {(() => {
+                    const count = machines.filter((m) => m.category === c.slug).length;
+                    return `${count} ${count === 1 ? "model" : "models"}`;
+                  })()}
                 </span>
               </div>
               <div className="flex flex-1 flex-col p-6">

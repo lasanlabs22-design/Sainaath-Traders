@@ -13,7 +13,7 @@ import { MachineBrands } from "@/components/machines/MachineBrands";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export default async function HomePage() {
-  const [featured, spotlight, brands] = await Promise.all([getFeaturedMachines(), getMachine("tata-mybistro-premium"), getMachineBrands()]);
+  const [featured, spotlight, brands] = await Promise.all([getFeaturedMachines(), getMachine("astoria-tanya-r"), getMachineBrands()]);
 
   return (
     <>
