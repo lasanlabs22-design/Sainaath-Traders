@@ -366,8 +366,7 @@ export const machines: Machine[] = [
     badge: "Touchscreen",
   },
   // Not from the poster set: a Granules n Beans flyer supplied in chat
-  // (2026-10-16). The flyer carries another dealer's phone and email, so it is
-  // not attached as the brochure; the cut-out was traced from it.
+  // (2026-10-16), shown as the brochure; the cut-out was traced from it.
   {
     ...beanDefaults,
     slug: "granules-n-beans-my-espresso-fa100",
@@ -381,6 +380,7 @@ export const machines: Machine[] = [
     highlights: ["Fresh-milk coffee", "14 g / 20 g brewer options", "Smart bean detection", "Automatic rinsing & cleaning"],
     specs: { display: "7″ touchscreen", grinder: "Built-in 64 mm steel burr grinder", capacity: "Up to 100 cups/day" },
     images: ["/images/machines/gnb-my-espresso-fa100.webp"],
+    poster: "/images/posters/gnb-my-espresso-fa100.webp",
     badge: "New",
     cupsPerDay: "Up to 100",
   },
