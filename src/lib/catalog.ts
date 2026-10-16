@@ -48,7 +48,7 @@ const brandBlurbs: Record<string, string> = {
   "Café Desire": "From bottle-fed classics to the 18-drink Insta Bean.",
   Cothas: "Bengaluru’s filter-coffee house, plus the LIQCAF range.",
   "Dr.coffee": "Fully automatic, touchscreen bean-to-cup.",
-  "Granules n Beans": "2-line and 4-line vending to bean-to-cup and TruBrew.",
+  "Granules n Beans": "Premix vending, beverage urns, TruBrew and Premium Espresso bean machines.",
   "Godrej Vending": "Trusted Godrej engineering for every pantry.",
   NESCAFÉ: "The iconic red-mug machines, bottle-top or tank.",
   Roastea: "10.1″ touchscreen tea & coffee for busy floors.",
