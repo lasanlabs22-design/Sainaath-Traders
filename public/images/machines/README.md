@@ -1,5 +1,5 @@
 Machine images, one per model, named after the client poster they were cut from (`175.webp` … `200.webp`),
-plus `astoria-tanya-r.webp` (product photo supplied in chat).
+plus `astoria-tanya-r.webp` and `gnb-*.webp` (product photos / flyer supplied in chat).
 
 Each is the whole machine alone — poster background, headings, props and badges removed — as a
 transparent 800 × 1000 (4:5) WebP with a soft floor shadow baked in. Tall machines stand on the same

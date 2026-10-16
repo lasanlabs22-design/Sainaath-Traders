@@ -313,11 +313,30 @@ export const machines: Machine[] = [
     images: [cut(185)],
     poster: poster(185),
   },
+  // Not from the poster set: two product photos supplied in chat (2026-10-16),
+  // one model in two versions. No spec sheet was supplied, so only what the
+  // photos show is listed.
+  {
+    ...premixDefaults,
+    slug: "granules-n-beans-beverage-urn",
+    name: "GnB Hot Beverage Urn",
+    brand: "Granules n Beans",
+    model: "Stainless-steel urn · single or twin tap",
+    tagline: "Hot tea & coffee for a crowd.",
+    description:
+      "A stainless-steel urn that keeps a large batch of tea or coffee hot and ready to pour. The single-tap version serves one beverage; the twin-tap version adds a separate hot-water tap and a temperature knob. Side handles make it easy to move between canteens, events and counters.",
+    highlights: ["Single-tap or twin-tap version", "Separate hot-water tap (twin-tap)", "Indicator lamps", "Stainless-steel body with side handles"],
+    beverages: ["Tea", "Coffee", "Hot Water"],
+    specs: { display: "Power & heating indicator lamps", material: "Stainless steel" },
+    images: ["/images/machines/gnb-urn-twin-tap.webp", "/images/machines/gnb-urn-single-tap.webp"],
+    badge: "New",
+  },
   {
     ...beanDefaults,
     slug: "granules-n-beans-bean-to-cup-steel",
     name: "GnB Bean-to-Cup Steel",
     brand: "Granules n Beans",
+    line: "GnB Premium Espresso",
     model: "Bean-to-cup, LCD",
     tagline: "Precision. Performance. Perfection.",
     description:
@@ -333,6 +352,7 @@ export const machines: Machine[] = [
     slug: "granules-n-beans-bean-to-cup-touch",
     name: "GnB Bean-to-Cup Touch",
     brand: "Granules n Beans",
+    line: "GnB Premium Espresso",
     model: "Bean-to-cup, 7″ touch",
     tagline: "Precision. Performance. Perfection.",
     description:
@@ -344,6 +364,25 @@ export const machines: Machine[] = [
     poster: poster(187),
     featured: true,
     badge: "Touchscreen",
+  },
+  // Not from the poster set: a Granules n Beans flyer supplied in chat
+  // (2026-10-16). The flyer carries another dealer's phone and email, so it is
+  // not attached as the brochure; the cut-out was traced from it.
+  {
+    ...beanDefaults,
+    slug: "granules-n-beans-my-espresso-fa100",
+    name: "GnB My Espresso FA100",
+    brand: "Granules n Beans",
+    line: "GnB Premium Espresso",
+    model: "FA100 JL30B · fresh-milk bean-to-cup",
+    tagline: "Sip. Smile. Share.",
+    description:
+      "Fresh-milk coffee from whole beans: a built-in 64 mm steel burr grinder, a choice of 14 g or 20 g brewer and a 7-inch touchscreen. Smart bean detection and automatic rinsing and cleaning keep it running with little attention at up to 100 cups a day — for offices, cafés, hotels, restaurants and corporate spaces.",
+    highlights: ["Fresh-milk coffee", "14 g / 20 g brewer options", "Smart bean detection", "Automatic rinsing & cleaning"],
+    specs: { display: "7″ touchscreen", grinder: "Built-in 64 mm steel burr grinder", capacity: "Up to 100 cups/day" },
+    images: ["/images/machines/gnb-my-espresso-fa100.webp"],
+    badge: "New",
+    cupsPerDay: "Up to 100",
   },
   {
     ...beanDefaults,
